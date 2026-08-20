@@ -1,0 +1,284 @@
+/* 
+Color Palette:
+Yellow: #FFC600
+*/
+
+@import url(https://fonts.googleapis.com/css2?family=Abel&family=Sora&family=Noto+Sans);
+
+html, body {
+    background-color:black;
+    color:white;
+    font-family: 'Abel';
+    height: 100%;
+    width: 100%;
+    margin: 0px
+}
+
+h1 {
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 45px;
+    margin: 0px;
+}
+
+p {
+    font-size: 24px;
+}
+
+a {
+    color: white;
+    transition: color 0.1s ease-out;
+}
+
+a:hover {
+    color: #FFC600;
+}
+
+.grey_link {
+    color: #a8a8a8;
+}
+
+.grey_link:hover {
+    color: #FFC600;
+}
+
+.emphasized_txt {
+    font-size: 30px;
+}
+
+section {
+    box-sizing: border-box;
+    padding: 50px 25% 30px 25%;
+    margin: 0px;
+    border: 1px solid grey;
+    height: auto;
+}
+
+.header_line {
+    background-color: #FFC600;
+    height: 2px;
+    margin: 0px;
+    margin-top: 5px;
+    width: 0%;
+}
+
+sup {
+    font-size: 20;
+    color: grey;
+}
+
+/* Nav ------------------------------------------- */
+nav {
+    position:fixed;
+    background-color: white;
+    width: 170px;
+    height: auto;
+    top: 20vh;
+    left: 3vw;
+    z-index: 2;
+}
+
+nav ul {
+    list-style-type: none;
+    font-size: 20px;
+    margin: 0px;
+    padding: 0px;
+}
+
+nav ul li 
+{
+    padding: 7px 7px 7px 30px;
+    transition: background-color 0.1s ease-out;
+}
+
+nav ul li:hover {
+	background-color: #1c1c1c;
+} 
+
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+/* ARROW CLASS ------------------------- */
+
+.down_arrow {
+    margin-top: 30px;
+    text-align:center;
+    padding-bottom: 3vh;
+    box-sizing: border-box;
+}
+
+.arrow {
+    font-size: 35px;
+    margin: 0px;
+    display: inline;
+    transition: color 0.1s ease-out;
+}
+
+.arrow:hover {
+    color: #FFC600;
+}
+
+/* SECTION 1 ------------------------------------------- */
+#s1
+{
+    margin:0px;
+    padding: 0px;
+    height: 90%;
+}
+
+#startVid
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    margin: 0px;
+    height: 90%;
+    font-family: "Sora";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 29vh;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+
+/* SECTION 2 ------------------------------------------------------------ */
+#s2
+{
+    padding: 0px;
+    min-height: 750px;
+    background-repeat: no-repeat;
+    background-image: url("Images/Yuto_Onishi_Darker.jpg");
+    background-size: cover;
+}
+
+
+#s2_txt {
+    box-sizing: border-box;
+    padding: 10vh 25% 5vh 25%;
+}
+
+#s2 h1 
+{
+    margin-bottom: 0px;
+}
+
+/* SECTION 3 --------------------- */
+#s3 {
+    min-height: 600px;
+}
+
+#s3_wrapper {
+    height: 19vw;
+    margin-top: 10px;
+}
+
+#s3_fig img {
+    width: 60%;
+    height: 19vw;
+    float: left;
+    object-fit:cover;
+}
+
+#s3_caption{
+    background-color: #1c1c1c;
+    color: #a8a8a8;
+    height: 19vw;
+    box-sizing: border-box;
+    padding: 10px 10px 10px 30.5vw;
+}
+
+#s3_right_arrow {
+    font-size: 50px !important;
+    margin: 0px;
+    line-height: 25px;
+    transition: color 0.2s ease-out;
+}
+
+#s3_right_arrow:hover {
+    color: #FFC600;
+}
+
+#s3_caption p {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+figure {
+    margin:0px;
+}
+
+/* SECTION 4 ------------------------------------------------------------ */
+#s4 {
+    min-height: 1200px;
+}
+
+#s4_wrapper{
+    flex-wrap: nowrap;
+}
+
+#s4_quotes {
+    border: solid #FFC600;
+    border-width: 2px 0px 2px 0px;
+    min-height:200px;
+    width: 70%;
+    color:#a8a8a8;
+    box-sizing: border-box;
+    padding: 10px 10px 10px 0px;
+    font-family: "Sora";
+}
+
+/* SECTION 5 ------------------------------------------------------------ */
+#s5 {
+    min-height: 900px;
+    background-image: url("Images/Hikikomori.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#s5_wrapper {
+    background-image: url("Images/Hikikomori.png");
+    z-index:-3;
+    opacity: 0.5
+}
+/* SECTION 6 ------------------------------------------------------------ */
+#s6 {
+
+}
+
+#s6_images {
+    width: 130%;
+    margin-left: -15%;
+    display:flex;
+}
+
+#s6_images img{
+    width:100%;
+    background-color: white;
+    height:100%;
+}
+
+#s6_pseudo_caption {
+    width:130%;
+    margin-left: -15%;
+    margin-top: 5px;
+    font-size: 16px;
+    color: #a8a8a8;
+    text-align:center;
+}
+
+/* SECTION 7 ----------------------------------------------------- */
+ol li {
+    font-size: 24px;
+    margin-bottom: 20px;
+}

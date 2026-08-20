@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html> 
+
+<head>
+	<meta charset="UTF-8">
+	<title>Practice1</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+            //Setup
+            let progress = 0;
+            let animTime = 0;
+            let score = 0
+
+            /*
+            Bar Positions: 
+            Spaces
+            1st: 6vh
+            2nd: 13 vh
+            3rd: 20vh
+            4th: 27 vh 
+
+            Lines
+            1st: 9.5vh
+            2nd: 16.5vh
+            3rd: 23.5vh
+
+            Keycodes
+            W: 87
+            S: 83
+            A: 65
+            D: 68
+            */
+
+            //Local Storage Variables
+            let  pianoScore = parseInt(localStorage.getItem("pianoScore"));
+            let anetteScore = parseInt(localStorage.getItem("anetteScore"));
+            console.log(pianoScore);
+            console.log(anetteScore);
+
+            var isPlaying = false; 
+           //The main array that's going to be used
+            var noteArray;
+            var notePosition;
+            var noteVerticalPosition;
+            var noteTime;
+            var noteKey;
+
+            //First sequence of notes
+            var noteArrayOne = new Array($('#note_1'), $('#note_2'), $('#note_3'), $('#note_4'), $('#note_5'), $('#note_6'), $('#note_7'), $('#note_8'));
+            var notePositionOne = new Array(0.30, 0.39, 0.46, 0.50, 0.52, 0.55, 0.6, 0.61); 
+            var noteVerticalPositionOne = new Array(27, 13, 13, 13, 13, 16.5, 13, 9.5); 
+            var noteTimeOne = new Array(22, 42, 57, 66, 69, 77, 87, 91); //%completion of the bar scrolling animation
+            var noteKeyOne = new Array(65, 87, 87, 87, 87, 65, 87, 68);
+
+            //Second sequence of notes
+            var noteArrayTwo = new Array($('#note_9'), $('#note_10'), $('#note_11'), $('#note_12'), $('#note_13'), $('#note_14'), $('#note_15'), $('#note_16'));
+            var notePositionTwo = new Array(0.30, 0.37, 0.42, 0.46, 0.48, 0.50, 0.55, 0.56); 
+            var noteVerticalPositionTwo = new Array(27, 13, 13, 13, 13, 16.5, 13, 9.5); 
+            var noteTimeTwo = new Array(22, 38, 49, 58, 61, 67, 77, 80);
+            var noteKeyTwo = new Array(65, 87, 87, 87, 87, 65, 87, 68);
+
+            //Third sequence of notes
+            var noteArrayThree = new Array($('#note_17'), $('#note_18'), $('#note_19'), $('#note_20'), $('#note_21'), $('#note_22'), $('#note_23'));
+            var notePositionThree = new Array(0.30, 0.35, 0.37, 0.41, 0.43, 0.46, 0.48); 
+            var noteVerticalPositionThree = new Array(27, 13, 16.5, 13, 16.5, 16.5, 20); 
+            var noteTimeThree = new Array(22, 35, 38, 46, 49, 59, 62);
+            var noteKeyThree = new Array(65, 68, 87, 68, 87, 87, 65);
+
+
+            //Shortcuts to make typing easier
+            let playerText = $('#playerText');
+            let playerTextbox = $('#playerTextbox');
+            let stage = $('#stage');
+            
+            //Preparing scene
+            stage.css("background-image", "url('Images/Piano/Day.jpg')");
+            changeTextbox(playerTextbox, 2, 2);
+            $('#notes').hide(); 
+            $('#notesTwo').hide(); 
+            $('#notesThree').hide(); 
+            $('#bar').hide(); 
+            noteArray = noteArrayOne;
+            notePosition = notePositionOne;
+            noteVerticalPosition = noteVerticalPositionOne; 
+            noteTime = noteTimeOne;
+            noteKey = noteKeyOne; 
+
+            //Setting note positions, coded to be scaleable
+            for(i = 0; i < noteArrayOne.length; i++){
+                noteArrayOne[i].css("left", (notePositionOne[i] - 0.01)* jQuery(window).width() + "px");
+                noteArrayOne[i].css("top", noteVerticalPositionOne[i] + "vh");
+            }
+
+            for(i = 0; i < noteArrayTwo.length; i++){
+                noteArrayTwo[i].css("left", (notePositionTwo[i] - 0.01)* jQuery(window).width() + "px");
+                noteArrayTwo[i].css("top", noteVerticalPositionTwo[i] + "vh");
+            }
+
+            for(i = 0; i < noteArrayThree.length; i++){
+                noteArrayThree[i].css("left", (notePositionThree[i] - 0.01)* jQuery(window).width() + "px");
+                noteArrayThree[i].css("top", noteVerticalPositionThree[i] + "vh");
+            }
+
+            //Player Input Functions, most of it is for debugging. 
+            $(document).keydown(function(event) {
+                if(event.keyCode == 87){
+                    // console.log("Time: " + animTime);
+                    // console.log("Position: " + $('#bar').position().left / jQuery(window).width());
+                } else if(event.keyCode == 68){
+                    // console.log("Time: " + animTime);
+                    // console.log("Position: " + $('#bar').position().left / jQuery(window).width());
+                } else if(event.keyCode == 32){
+                    //animateBar(6000, '#Sequence13'); 
+                } 
+                checkTiming(event.keyCode); 
+            })
+
+            stage.click(updateText);
+            function updateText(){
+                if(animTime == 100) {
+                    isPlaying = false;
+                }
+
+                progress++; 
+                if(progress == 1){
+                    changeText(playerText, "It's as if I can see the notes in my head.");
+                } else if (progress == 2){
+                    changeBackground("url('Images/Piano/Day_Staff_Blank.jpg')");
+                    $('#notes').show(); 
+                    $('#bar').show(); 
+                } else if (progress == 3){
+                    $('#playerTextbox').fadeOut(160, function() {
+                        changeTextbox(playerTextbox, 1, 2); 
+                        playerText.text("Tutorial:");
+                    });  
+                    $('#playerTextbox').fadeIn(160); 
+                } else if (progress == 4){
+                    changeText(playerText, "This is a beat minigame. When it starts, the black bar will slowly move across the screen.")
+                } else if (progress == 5){
+                    changeText(playerText, "When the bar overlaps one of the notes, hit the corresponding key (W for up, A for left, D for right) to earn points.")
+                } else if (progress == 6){
+                    changeText(playerText, "Aim to hit the key when the bar is at the very middle of the note. Hit it too early or too late, and you will lose points.")
+                } else if (progress == 7){
+                    changeText(playerText, "Also, do not hold the key down as that will interfere with detecting input. Press and immediately release.")
+                }else if (progress == 8){
+                    $('#playerTextbox').fadeOut(160, function() {
+                        changeTextbox(playerTextbox, 2, 2); 
+                        playerText.text("Alright, let's get going.");
+                    });  
+                    $('#playerTextbox').fadeIn(160); 
+                } else if (progress == 9){
+                    $('#playerTextbox').fadeOut(160);
+                    animateBar(6000, '#Sequence11'); 
+                } else if (progress == 10 && isPlaying == false){
+                    playerText.text("Let's continue.");
+                    $('#notes').hide(); 
+                    $('#playerTextbox').fadeIn(160); 
+                    noteArray = noteArrayTwo;
+                    notePosition = notePositionTwo;
+                    noteVerticalPosition = noteVerticalPositionTwo; 
+                    noteTime = noteTimeTwo;
+                    noteKey = noteKeyTwo; 
+                } else if (progress == 11){
+                    $('#notesTwo').show(); 
+                    $('#playerTextbox').fadeOut(160);
+                    animateBar(6000, '#Sequence12'); 
+                } else if (progress == 12 && isPlaying == false){
+                    playerText.text("Last one for the page.");
+                    $('#notesTwo').hide(); 
+                    $('#playerTextbox').fadeIn(160); 
+                    noteArray = noteArrayThree;
+                    notePosition = notePositionThree;
+                    noteVerticalPosition = noteVerticalPositionThree; 
+                    noteTime = noteTimeThree;
+                    noteKey = noteKeyThree; 
+                } else if (progress == 13){
+                    $('#notesThree').show(); 
+                    $('#playerTextbox').fadeOut(160);
+                    animateBar(6000, '#Sequence13'); 
+                } else if (progress == 14 && isPlaying == false){
+                    pianoScore += score; 
+                    localStorage.setItem('pianoScore', pianoScore); 
+                    localStorage.setItem('anetteScore', anetteScore); 
+                    window.location = "scene9.html";
+                } else {
+                    progress--; 
+                }
+            }
+
+
+            //Checks if player input is in time
+            function checkTiming(keyCode) {
+                let allowance = 3; 
+                let hit = false;
+
+                for(i = 0; i < noteTime.length; i++){
+                    if(animTime > (noteTime[i] - allowance) && animTime < (noteTime[i] + allowance)){ //If they got the right timing
+                        if(keyCode == noteKey[i]){ //If they got the right key
+                            hit = true;
+                            noteArray[i].attr('src','Images/Notes/Green_Note.png');
+                            i = noteTime.length + 1; 
+                        }
+                    } 
+                }
+
+                if(hit){
+                        score += 50;
+                } else {
+                    if(score > 0){ //Score wont go down to a negative number
+                        score -= 20;
+                    }
+                }
+
+                $("#score").text("Score: " + score);
+            }
+
+            //Animates the bar
+            function animateBar(duration, audio){
+                if(isPlaying == false){
+                    isPlaying = true; 
+                    $(audio)[0].play();
+                    $(audio)[0].volume = 0.6;
+                    $('#bar').css("left", "20vw");
+                    $('#bar').animate({
+                        left: '65vw'
+                    }, {
+ 		                progress: function(animation, progress, msRemaining) {
+	                        animTime = 100 * progress;
+	                    },
+	                    easing: 'linear',
+	                    duration: duration
+  	                });
+                }
+            }
+
+            //Choice functions
+            $('#choice1').click(function(){
+                choice1 = true; 
+            })
+            $('#choice2').click(function(){
+                choice2 = true; 
+            })
+
+            //Changes textbox name + applies fade in/out
+            function setName(name){
+                $('#playerName').text(name); 
+            }
+
+            //Smooth background transition by preemptively loading it on a separate scene to remove black flash
+            function changeBackground(url){
+                $('#stage2').css("background-image", url).delay(100).show(function(){
+                    stage.css("background-image", "none");
+                    stage.css("background-image", url);
+                    
+                });
+                //stage.css("background-image", "none");
+            }
+
+            //Changes text + applies fade in/out
+            function changeText(person, text){
+                person.fadeOut(160, function(){
+                    person.text(text);
+                });
+                person.fadeIn(160);
+            }
+
+            //Changes textbox color and type
+            function changeTextbox(textbox, color, boxType){ 
+                if(color == 1){ //White
+                    textbox.css("background-color", "rgba(222,218,220,0.9)");
+                    textbox.css("color", "rgba(127,103,103, 1)");
+                    textbox.css("border", "5px solid rgba(127,103,103, 1)");
+                } else if(color == 2){ //Dark Brown
+                    textbox.css("background-color", "rgba(56, 35, 33, 0.97)");
+                    textbox.css("color", "rgba(245, 235, 223, 1)");
+                    textbox.css("border", "5px solid rgba(70, 51, 49, 0.97)");
+                } else if(color == 3){ //Anette Burgundy
+                    textbox.css("background-color", "rgba(114,42,44, 0.97)");
+                    textbox.css("color", "rgba(248,233,233, 1)");
+                    textbox.css("border", "5px solid rgba(110,57,59, 1)");
+                }
+
+                if(boxType == 1){ //Dialogue Box
+                    textbox.css("border-radius", "30px");
+                } else if (boxType == 2){ //Thought Box
+                    textbox.css("border-radius", "100px");
+                }
+            }
+
+            function fadeInSound(audio, miliseconds){
+                audio[0].volume = 0; 
+                audio.animate({volume: 0.2}, miliseconds); 
+            }
+            
+            function fadeOutSound(audio, miliseconds){
+                audio.animate({volume: 0}, miliseconds); 
+            }
+
+      });
+
+	</script>
+</head>
+
+<body>
+    <audio src="Audio/Sequence_1_1.mp3" id="Sequence11"></audio>
+    <audio src="Audio/Sequence_1_2.mp3" id="Sequence12"></audio>
+    <audio src="Audio/Sequence_1_3.mp3" id="Sequence13"></audio>
+
+	<div id="stage">
+        <!-- Bar for the minigame -->
+        <img src="Images/Black.png" id="bar">
+
+		<div id = playerTextbox class="textbox">
+			<p id ="playerText" class="text">I don't even need the sheet music at this point.</p>
+            <p id ="playerName" class="name"></p>
+		</div>
+
+        <div id="scoreTextbox">
+            <p id="score">Score: </p>
+        </div>
+
+        <!-- Notes -->
+        <div id="notes">
+            <img src="Images/Notes/Left_Note.png" class = "note" id="note_1">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_2">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_3">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_4">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_5">
+            <img src="Images/Notes/Left_Note.png" class = "note" id="note_6">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_7">
+            <img src="Images/Notes/Right_Note.png" class = "note" id="note_8">
+        </div>
+
+       <div id="notesTwo">
+            <img src="Images/Notes/Left_Note.png" class = "note" id="note_9">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_10">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_11">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_12">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_13">
+            <img src="Images/Notes/Left_Note.png" class = "note" id="note_14">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_15">
+            <img src="Images/Notes/Right_Note.png" class = "note" id="note_16">
+        </div> 
+
+        <div id="notesThree">
+            <img src="Images/Notes/Left_Note.png" class = "note" id="note_17">
+            <img src="Images/Notes/Right_Note.png" class = "note" id="note_18">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_19">
+            <img src="Images/Notes/Right_Note.png" class = "note" id="note_20">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_21">
+            <img src="Images/Notes/Up_Note.png" class = "note" id="note_22">
+            <img src="Images/Notes/Left_Note.png" class = "note" id="note_23">
+        </div> 
+
+        <div id="stage2">
+        </div>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html> 
+
+<head>
+	<meta charset="UTF-8">
+	<title>Alfira Tree</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+            //Setup
+            let progress = 0;
+            let choice1 = false; 
+            let choice2 = false; 
+
+            //Shortcuts to make typing easier
+            let playerText = $('#playerText2');
+            let playerTextbox = $('#playerTextbox');
+            let anetteText = $('#anetteText');
+            let stage = $('#stage');
+            
+            //Preparing scene
+            stage.css("background-image", "url('Images/Together.jpg')");
+            changeTextbox($('#playerTextbox'), 2, 2);
+            $("#anetteTextbox3").hide();
+            $('#playerTextbox').hide();
+            $("#choice1").hide();
+            $("#choice2").hide();
+            let bgmTime = localStorage.getItem("bgmTime");
+            $('#BGM')[0].volume = 0.05;
+            $('#BGM')[0].currentTime = bgmTime; 
+            $('#BGM')[0].play();
+
+            //Setting textbox color for the scene
+
+            stage.click(updateText);
+            function updateText(){
+                progress++; 
+
+                if(progress == 1){
+                    changeText(playerText, "I've started getting blisters on my hands from the practice alone.");
+                } else if (progress == 2){
+                    changeText(playerText, "Any more and I'll hear Liebeslied in my sleep.");
+                } else if (progress == 3){
+                    $('#anetteTextbox3').fadeIn(160);
+                    $('#playerTextbox2').fadeOut(160); 
+                } else if (progress == 4){
+                    playerText.text("Who knows? I might have gone crazy long ago."); 
+                    $('#anetteTextbox3').fadeOut(160);
+                    $('#playerTextbox2').fadeIn(160); 
+                } else if (progress == 5){
+                    anetteText.text("You’re gonna make me worried if you keep talking like that."); 
+                    $('#anetteTextbox3').fadeIn(160);
+                    $('#playerTextbox2').fadeOut(160); 
+                } else if (progress == 6){
+                    playerText.text("My Bad."); 
+                    $('#anetteTextbox3').fadeOut(160);
+                    $('#playerTextbox2').fadeIn(160); 
+                }  else if (progress == 7){
+                    $('#playerTextbox2').fadeOut(160); 
+                    $("#choice1").fadeIn(160);
+                    $("#choice2").fadeIn(160);
+                } else if (progress == 8 && (choice1 || choice2)){
+                    progress = 30
+                    if(choice1){
+                        playerText.text("My mother called the other day…"); 
+                    } else if (choice2) {
+                        playerText.text("Looking for gigs has been kinda rough. Looking for enough to be ‘consistent,’ I mean."); 
+                    }
+                    $("#choice1").fadeOut(160);
+                    $("#choice2").fadeOut(160);
+                    $('#playerTextbox2').fadeIn(160); 
+                } else if (progress == 9){
+                    $('#playerText').text("She turns to me and holds my hand.");
+                    $('#anetteTextbox3').fadeOut(160);
+                    $('#playerTextbox').fadeIn(160); 
+                } else if (progress == 10){
+                    playerText.text("I get where she's coming from. It's logical, it makes sense."); 
+                    $('#playerTextbox').fadeOut(160); 
+                    $('#playerTextbox2').fadeIn(160); 
+                } else if (progress == 11){
+                    changeText(playerText, "But I can't just leave it, you know? Performing, my dream.");
+                } else if (progress == 12){
+                    changeText(playerText, "Every time I think about leaving it I- I just can't.");
+                } else if (progress == 13){
+                    changeText(playerText, "There's something pulling me to the piano.");
+                } else if (progress == 14){
+                    changeText(playerText, "There's a certain sense of fulfillment that only it can give me.");
+                }  else if (progress == 15){
+                    changeText(playerText, "And when I perform in front of the crowd, the cheers, the spotlight, the everything it’s,");
+                } else if (progress == 16){
+                    changeText(playerText, "it’s… cathartic? Exhilirating? Addicting even.");
+                } else if (progress == 17){
+                    $('#playerText').text("Anette nods, giving me her full attention.");
+                    $('#playerTextbox2').fadeOut(160); 
+                    $('#playerTextbox').fadeIn(160); 
+                } else if (progress == 18){
+                    playerText.text("This competition is a chance to get my name out there. I’ll move to a bigger stage, in front of a bigger audience."); 
+                    $('#playerTextbox').fadeOut(160); 
+                    $('#playerTextbox2').fadeIn(160); 
+                } else if (progress == 19){
+                    changeText(playerText, "And it'll all be worth it in the end.");
+                } else if (progress == 20){
+                    $('#playerText').text("Anette holds my hand tighter, giving me words of affirmation.");
+                    $('#playerTextbox2').fadeOut(160); 
+                    $('#playerTextbox').fadeIn(160); 
+                }  else if (progress == 21){
+                    changeText($('#playerText'), "We stay like this for awhile, basking in a comfortable silence.");
+                } else if (progress == 22){
+                    playerText.text("Thank you for checking up on me Anette."); 
+                    $('#playerTextbox').fadeOut(160); 
+                    $('#playerTextbox2').fadeIn(160); 
+                } else if (progress == 23){
+                    anetteText.text("Someone had to, I'll always be here for you Elfie."); 
+                    $('#anetteTextbox3').fadeIn(160);
+                    $('#playerTextbox2').fadeOut(160); 
+                } else if (progress == 24){
+                    playerText.text("I promise I'll make it up to you."); 
+                    $('#playerTextbox2').fadeIn(160); 
+                    $('#anetteTextbox3').fadeOut(160);
+                } else if (progress == 25){
+                    anetteText.text("...I want food then."); 
+                    $('#anetteTextbox3').fadeIn(160);
+                    $('#playerTextbox2').fadeOut(160); 
+                } else if (progress == 26){
+                    playerText.text("Deal. How does a lunch date next Sunday sound?"); 
+                    $('#playerTextbox2').fadeIn(160); 
+                    $('#anetteTextbox3').fadeOut(160);
+                } else if (progress == 27){
+                    anetteText.text("Deal."); 
+                    $('#anetteTextbox3').fadeIn(160);
+                    $('#playerTextbox2').fadeOut(160); 
+                } else if (progress == 28){
+                    bgmTime = $("#BGM")[0].currentTime;
+                    localStorage.setItem('bgmTime', bgmTime); 
+                    window.location = "scene15.html";
+                } else if(progress == 31 && (choice1 || choice2)){
+                    if(choice1){
+                        anetteText.text("What about?"); 
+                        $('#anetteTextbox3').fadeIn(160);
+                        $('#playerTextbox2').fadeOut(160); 
+                    } else if (choice2){
+                        anetteText.text("Your playing is great though."); 
+                        $('#anetteTextbox3').fadeIn(160);
+                        $('#playerTextbox2').fadeOut(160);
+                    }
+                } else if(progress == 32 && (choice1 || choice2)){
+                    if(choice1){
+                        playerText.text("She gave me another sermon about switching careers."); 
+                        $('#anetteTextbox3').fadeOut(160);
+                        $('#playerTextbox2').fadeIn(160); 
+                    } else if (choice2){
+                        playerText.text("Common people aren’t interested in the classics."); 
+                        $('#anetteTextbox3').fadeOut(160);
+                        $('#playerTextbox2').fadeIn(160); 
+                    }
+                } else if(progress == 33 && (choice1 || choice2)){
+                    if(choice1){
+                        anetteText.text("The usual?"); 
+                        $('#anetteTextbox3').fadeIn(160);
+                        $('#playerTextbox2').fadeOut(160); 
+                    } else if (choice2){
+                        changeText(playerText, "They want simple, catchy background music. And that’s the level that they pay for.");
+                    }
+                }  else if(progress == 34 && (choice1 || choice2)){
+                    if(choice1){
+                        playerText.text("Yeah, the usual. Always rattling on about how I should give up performing"); 
+                        $('#anetteTextbox3').fadeOut(160);
+                        $('#playerTextbox2').fadeIn(160); 
+                    } else if (choice2){
+                        anetteText.text("Are you sure there's nothing else you could use piano for?"); 
+                        $('#anetteTextbox3').fadeIn(160);
+                        $('#playerTextbox2').fadeOut(160); 
+                    }
+                }   else if(progress == 35 && (choice1 || choice2)){
+                    if(choice1){
+                        changeText(playerText, "That I can't possibly make it.");
+                    } else if (choice2){
+                        playerText.text("There's teaching but... I want to be the one performing."); 
+                        $('#anetteTextbox3').fadeOut(160);
+                        $('#playerTextbox2').fadeIn(160); 
+                    }
+                }  else if(progress == 36 && (choice1 || choice2)){
+                    if(choice1){
+                        anetteText.text("I'm sorry you had to go through that love."); 
+                        $('#anetteTextbox3').fadeIn(160);
+                        $('#playerTextbox2').fadeOut(160); 
+                        progress = 8
+                    } else if (choice2){
+                        changeText(playerText, "Although my mother nags at me all the time to give it up. She did so the other day, too.");
+                    }
+                } else if(progress == 37 && choice2){
+                    anetteText.text("I'm sorry to hear that love."); 
+                        $('#anetteTextbox3').fadeIn(160);
+                        $('#playerTextbox2').fadeOut(160); 
+                        progress = 8;
+                } else { 
+                    progress--; 
+                }
+
+            }
+
+            //Choice functions
+            $('#choice1').click(function(){
+                choice1 = true; 
+            })
+            $('#choice2').click(function(){
+                choice2 = true; 
+            })
+            $('#choice3').click(function(){
+                choice3 = true; 
+            })
+
+            //Changes textbox name + applies fade in/out
+            function setName(name){
+                $('#playerName').text(name); 
+            }
+
+            //Smooth background transition by preemptively loading it on a separate scene to remove black flash
+            function changeBackground(url){
+                $('#stage2').css("background-image", url).delay(100).show(function(){
+                    stage.css("background-image", "none");
+                    stage.css("background-image", url);
+                    
+                });
+                //stage.css("background-image", "none");
+            }
+
+            //Changes text + applies fade in/out
+            function changeText(person, text){
+                person.fadeOut(160, function(){
+                    person.text(text);
+                });
+                person.fadeIn(160);
+            }
+
+            //Changes textbox color and type
+            function changeTextbox(textbox, color, boxType){ 
+                if(color == 1){ //White
+                    textbox.css("background-color", "rgba(222,218,220,0.9)");
+                    textbox.css("color", "rgba(127,103,103, 1)");
+                    textbox.css("border", "5px solid rgba(127,103,103, 1)");
+                } else if(color == 2){ //Dark Brown
+                    textbox.css("background-color", "rgba(56, 35, 33, 0.97)");
+                    textbox.css("color", "rgba(245, 235, 223, 1)");
+                    textbox.css("border", "5px solid rgba(70, 51, 49, 0.97)");
+                } else if(color == 3){ //Anette Burgundy
+                    textbox.css("background-color", "rgba(114,42,44, 0.97)");
+                    textbox.css("color", "rgba(248,233,233, 1)");
+                    textbox.css("border", "5px solid rgba(110,57,59, 1)");
+                }
+
+                if(boxType == 1){ //Dialogue Box
+                    textbox.css("border-radius", "30px");
+                } else if (boxType == 2){ //Thought Box
+                    textbox.css("border-radius", "100px");
+                }
+            }
+
+            function fadeInSound(audio, miliseconds){
+                audio[0].volume = 0; 
+                audio.animate({volume: 0.2}, miliseconds); 
+            }
+            
+            function fadeOutSound(audio, miliseconds){
+                audio.animate({volume: 0}, miliseconds); 
+            }
+
+      });
+
+	</script>
+</head>
+
+<body>
+    <audio src="Audio/Have A Short Rest.mp3" id="BGM" loop></audio>
+
+	<div id="stage">
+
+		<div id = playerTextbox class="textbox">
+			<p id ="playerText" class="text"></p>
+            <p id ="playerName" class="name"></p>
+		</div>
+
+        <div id = playerTextbox2 class="textbox">
+			<p id ="playerText2" class="text">The competition's really taken a lot out of me.</p>
+            <p id ="playerName2" class="name">Alfira</p>
+		</div>
+
+        <div id = anetteTextbox3 class="textbox">
+			<p id ="anetteText" class="text">I’m surprised you’re not at that point already.</p>
+            <p id ="anetteName" class="name">Anette</p>
+		</div>
+
+        <div class="textbox" id="choice1">
+            <p class = "text">The Call</p>
+        </div>
+
+        <div class="textbox" id="choice2">
+            <p class="text">Music Gigs</p>
+        </div>
+
+        <div id="stage2">
+        </div>
+
+	</div>
+
+</body>
+</html>

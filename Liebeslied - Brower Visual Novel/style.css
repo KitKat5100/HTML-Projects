@@ -1,0 +1,245 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap);
+
+/*
+  font-family: "Raleway", sans-serif;
+  font-family: "Montserrat", sans-serif;
+
+*/
+
+body {
+	font-family: "Montserrat", sans-serif;
+	min-height: 80vh;
+	height: 100vh;
+	margin: 0px;
+	display: flex;
+	align-items: center;
+    background-color: black; 
+	font-weight: 500;
+}
+
+#stage2 {
+	height: 100vh;
+	width: 80vw;
+	border: 10px solid black;
+	margin: auto; 
+	position: relative; /* Needed for AiR: Wrapper div is position: relative */
+    background-size: cover;
+	overflow: hidden;
+	cursor: pointer; 
+	z-index: -1;
+}
+
+#stage {
+	height: 100vh;
+	width: 80vw;
+	border: 10px solid black;
+	margin: auto; 
+	position: relative; /* Needed for AiR: Wrapper div is position: relative */
+	background-image: url("Images/Room/Night.jpg");
+    background-size: cover;
+	overflow: hidden;
+	cursor: pointer; 
+}
+
+#stage > img {
+	position: absolute; /* Needed for AiR: parent element is position: absolute */
+}
+
+.textbox {
+	position: absolute;
+	display:flex; 
+	text-align: center; 
+  margin: 0px; 
+	box-sizing: border-box; 
+	font-size: 26px;
+	border-radius: 30px;  		
+	background-color: rgba(36,23,22, 0.97);
+	color:rgba(248,233,233, 1);
+	border: 5px solid rgba(46,33,32, 0.95); 
+}
+
+#playerTextbox {
+	background-color: rgba(56, 35, 33, 0.97);
+	height: 27%;  
+   padding: 0px 5vw 1vh 5vw;
+	left: 18vw; 
+	bottom: 8vh;
+   width:55%;
+	color:rgb(245, 235, 223);
+	border: 5px solid rgba(70, 51, 49, 0.97); 
+}
+
+#playerTextbox2 {
+	background-color: rgba(56, 35, 33, 0.97);
+	height: 25%;  
+   	padding: 0px 2vw 0vh 2vw;
+	left: 10vw; 
+	top: 40vh;
+    width: 30%;
+	color:rgb(245, 235, 223);
+	border: 5px solid rgba(70, 51, 49, 0.97); 
+}
+
+#choice1 {
+	left: 28vw;  
+	height: 10%;  
+	width: 30%;
+	top: 30vh;
+}
+
+#choice2 {
+	left: 28vw;  
+	height: 10%;  
+	width: 30%;
+	top: 45vh; 
+}
+
+#choice3 {
+	left: 28vw;  
+	height: 10%;  
+	width: 30%;
+	top: 60vh; 
+}
+
+#choice1:hover, #choice2:hover, #choice3:hover {
+	background-color: rgb(175, 63, 67) !important;
+	color: rgba(248,233,233, 1) !important; 
+	border: 5px solid rgb(173, 79, 82) !important; 
+}
+
+.name {
+	position: absolute; 
+	font-size: 28px;
+	top: 5%;
+	left: 6%; 
+}
+
+#anetteTextbox{
+	background-color: rgba(114,42,44, 0.97);
+	height: 35%;  
+    padding: 0px 2vw 0vh 2vw;
+	left: 4vw; 
+	top: 13vh;
+    width:25%;
+	color:rgba(248,233,233, 1);
+	border: 5px solid rgb(136, 66, 68); 
+}
+
+#anetteTextbox2 {
+	background-color: rgba(114,42,44, 0.97);
+	height: 25%;  
+  padding: 0px 2vw 0vh 2vw;
+	right: 10vw; 
+	top: 20vh;
+  width:30%;
+	color:rgba(248,233,233, 1);
+	border: 5px solid rgb(136, 66, 68); 
+}
+
+#anetteTextbox3 {
+	background-color: rgba(114,42,44, 0.97);
+	height: 27%;  
+    padding: 0px 2vw 0vh 2vw;
+	right: 13vw; 
+	top: 20vh;
+    width:25%;
+	color:rgba(248,233,233, 1);
+	border: 5px solid rgb(136, 66, 68); 
+}
+
+#momTextbox {
+	background-color: rgba(226, 221, 221, 0.94);
+	height: 30%;  
+  padding: 0px 2vw 0vh 2vw;
+	left: 8vw; 
+	top: 15vh;
+  width:30%;
+	color:rgb(41, 40, 40);
+	border: 5px solid rgb(238, 234, 234); 
+}
+
+#background {
+	width: 100%;
+	height: 100%; 
+	background-size: cover; 
+}
+
+.text {
+	margin: auto; 
+}
+
+#playerName {
+	top: 5%; 
+	left: 4%; 
+}
+#playerName2 {
+	top: 5%;
+	left: 4%; 
+}
+
+#scoreTextbox{
+	position: absolute; 
+	right: 2vw;
+	top: 2vh;
+	width: 300px;;
+	background-color: rgba(56, 35, 33, 0.97);
+	border-radius: 30px; 
+	border: 5px solid rgba(70, 51, 49, 0.97);
+	text-align: left; 
+	margin: 0px; 
+	padding-left: 10px; 
+	padding-right: 10px;
+	box-sizing: border-box; 
+	font-size: 30px;
+}
+
+#score{
+	line-height: 50%;
+	color: rgba(225, 215, 203, 1);
+}
+
+#title {
+	position: absolute;
+	width: 40%;
+	height: 18%;
+	border-radius: 200px;
+	font-size: 64px; 
+	left: 24vw; 
+	top: 25vh;  
+	border: 5px solid rgba(90, 61, 59, 0.97);
+}
+
+#bar {
+	position: absolute;
+	width: 15px;
+	height: 36vh;
+	left: 20vw;
+	top: 10vh;
+}
+
+.note {
+	position: absolute;
+	left: 0; 
+	width: 3.2vw; 
+	height: 13vh; 
+	top: 18vh; 
+}
+
+#choice1Unselectable {
+	left: 28vw;  
+	height: 10%;  
+	width: 30%;
+	top: 30vh;
+	color: rgba(82, 81, 81, 1);
+	background-color: rgba(18, 2, 8, 0.97);
+}
+
+#choice2Unselectable {
+	left: 28vw;  
+	height: 10%;  
+	width: 30%;
+	top: 45vh; 
+	color: rgba(82, 81, 81, 1);
+	background-color: rgba(18, 2, 8, 0.97);
+}

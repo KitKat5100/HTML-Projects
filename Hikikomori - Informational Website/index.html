@@ -1,0 +1,239 @@
+<!doctype html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>MMCC2041 Website</title>
+<link href="styles.css" rel="stylesheet"/>
+<script src="jquery-3.7.0.min.js" > </script>
+<script>
+     $(document).ready(function(){ 
+
+        //JQuery for having the quotes in section 4 cycle, written to utilize element's position in the DOM instead of ids
+        //Initialized to hide/show the proper things
+        $('#s4_quotes').children().hide();
+        $('#s4_quote_1').show();
+        var quote_counter = 1;  //sets counter so that it knows when to loop back to first quote
+        var text = $('#s4_quote_1'); 
+        function changeDisplay() {
+            text.fadeOut(200); //fades the current text out
+            if(quote_counter == 3) { //Loops the tet to the beginning if we're at the third one already
+                quote_counter = 0;
+                text = $('#s4_quote_1');
+            } else { //Set the quote to the next one otherwise
+                text = text.next();
+            }
+            text.delay(200).fadeIn(200); //fades it in
+            quote_counter++;
+        }
+        setInterval(changeDisplay, 10000); //Calls the changeDisplay every 10 seconds
+
+        //JQuery for the sets of images and captions in section 3 that cycle in and out.
+        var figure_counter = 1; //sets counter so that it knows when to loop back to first image and caption
+        //Initializes to hide/show the proper things
+        $('#s3_fig').children().hide();
+        $('#s3_caption').children().hide();
+        $('#s3_caption').find('#s3_right_arrow').show();
+        var caption = $('#s3_caption p:first-child').next();
+        var img = $('#s3_fig img:first-child');
+        img.show();
+        caption.show();
+        $('#s3_right_arrow').click(function() {
+            img.fadeOut(300);  //fades the current image and caption out
+            caption.fadeOut(300);
+            if(figure_counter == 3) { //Loops the img and caption to the beginning if we're at the third set already
+                img =  $('#s3_fig img:first-child');
+                caption = $('#s3_caption p:first-child').next();
+                figure_counter = 0;
+            } else { //Set img and caption to the next ones otherwise
+                img = img.next();
+                caption = caption.next();
+            }
+            img.delay(300).fadeIn(300); //fades it in
+            caption.delay(300).fadeIn(300);
+            figure_counter++;
+        });
+
+        //JQuery for the nav bar
+        $('nav ul li a').click(function(e) { //when the user clicks on it
+            e.preventDefault(); //prevents the default action of "teleporting" to it
+            let target = $( $(this).attr('href') ).position().top; //gets the position of the element we want to go to
+            $('html,body').stop().animate({ scrollTop: target }, { duration: //scrolls smoothly to it
+            700});
+            });
+
+        //JQuery for changing the color of the anchor nested in the li tag when the li is hovered over
+        $('ul li').mouseenter(function(){
+            $(this).find('a').css("color", "#FFC600").animate(500);
+        }); 
+        $('ul li').mouseleave(function(){
+            $(this).find('a').css("color", "black");
+        });
+
+        //JQuery for the arrows at the bottom of each section. Scrolls to the start of the next section.
+        $('.arrow').click(function(){
+             let target = $($(this).closest('section').next()).position().top; //Goes through the DOM to look for the section after it and get it's position
+             $('html,body').stop().animate({ scrollTop: target }, { duration: //scrolls to it
+             700});
+        });
+
+        //JQuery for animating the lines that "grow" below the header tags
+        //Implemented with "anim_anchor"s put on certain parts of the page. These tell the next heder_line to start animating when they're at the top of the page
+        //Initializing the first anim_anchor and header_line:
+        var trigger = $('#s1').find('.anim_anchor');
+        var line = $('#s2').find('.header_line');
+        $(window).on("scroll", function(){ //when the user scrolls
+            if($(window).scrollTop() >= trigger.position().top){ //checks if the anchor is at the top of the page and then animates the line
+                line.animate({width: '75%'}, 1500);
+                //Once a certain line's animation is triggered, find and switch to the next set of anchor and line.
+                trigger = trigger.closest('section').next().find('.anim_anchor');
+                line = line.closest('section').next().find('.header_line');
+            }
+        });
+
+    });
+</script>
+
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li id = "test"><a href="#s2">Definition</a></li>
+            <li><a href="#s3" id="life">Lifestyle of Isolation</a></li>
+            <li><a href="#s4">Why Are People Hikikomoris</a></li>
+            <li><a href="#s5">Culture of Conformity</a></li>
+            <li><a href="#s6">Rehabilitation</a></li>
+            <li><a href="#s7">References</a></li>
+        </ul>
+    </nav>
+
+    <section id="s1">
+        <video id ="startVid" autoplay loop muted>
+            <source src="Videos/Gaming.mp4">
+            <p>Your browser doesn't support HTML5, please upgrade.</p>
+        </video>
+        <div class = "overlay">
+            <h1>Hikikomori</h1>
+            <p class="anim_anchor">A Japanese cultural phenomenon.</p>
+            <div class="down_arrow">
+                <p class="arrow">▼</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="s2">
+        <div id="s2_txt">
+            <h1>Hikikomori</h1>
+            <p class="header_line"></p>
+            <p>noun</p>
+            <p>People who are in a state of <b>severe social withdrawal</b>, avoidance, and physical isolation. Often accompanied by psychological distress for a period of at least six months<sup>[4,5]</sup>.</p>
+            <p class="anim_anchor">Such individuals often refuse to leave their house, do not go to work or school, and <b>isolate themselves</b> from society and families. Often times, the social aspect associated with all of these environments become impossible for the person.</p>
+            <p>Hikikomori refers to both the social phenomenon, as well as the person themself. The term was coined by psychologist Saito Tamaki in his 1998 book “Social Withdrawal - Adolescence Without End."<sup>[5]</sup> According to <a target="_blank" href = "https://economictimes.indiatimes.com/news/how-to/whats-hikikomori-why-15-lakh-japanese-are-living-in-isolation/articleshow/99275748.cms">this article,</a> there are about 1.5 million Hikikomoris in Japan.</p>
+        </div>
+        <div class="down_arrow">
+            <p class="arrow">▼</p>
+        </div>
+    </section>
+
+    <section id="s3">
+        <h2>Lifestyle of Isolation</h2>
+        <p class="header_line"></p>
+        <p>While the lifestyle of a Hikikomori varies drastically, they typically involve locking themselves in their room, idling away at the hours, 
+            and losing many years of their life in isolation.<sup>[9]</sup> In most cases, a Hikikomori's parents are their only source of financial support, dedicating 
+            years to ensure their child’s basic living needs are met. Parents are often reluctant to speak to others in order to maintain their reputation, 
+            while the child remains quietly hidden from the world.<sup>[6]</sup></p>
+        <p class="anim_anchor">There are also many shut-ins, called soto-komori, who venture out once a day or week to grocery shop at convenience stores.<sup>[9]</sup></p>
+        <div id="s3_wrapper">
+            <figure id="s3_fig">
+                <img src="Images/Ikuo_Nakamura.jpg" alt="Nakamura laying on his bed in a small room">
+                <img src="Images/Yuto_Onishi.jpg" alt="Onishi reading manga in a messy room">
+                <img src="Images/Riki_Cook.png" alt="Riki laying down on a futon surrounded by clutter">
+            </figure>
+            <div id="s3_caption">
+                <p id="s3_right_arrow">⟶</p>
+                <p>Figure 1:<br>Ikuo Nakamura, 34, who had locked himself in his room for seven years. He had disagreements with teachers and friends, and later found life unfair. Photo by <a class="grey_link" target="_blank" href="https://witness.worldpressphoto.org/it-felt-safe-here-adcb41725fc2">Maika Elan</a></p>
+                <p>Figure 2:<br>Yuto Onishi, 18. He had not left his bedroom for three years, spending his days surfing the internet and reading manga. <a class="grey_link" target="_blank" href="https://www.dailymail.co.uk/news/article-3154180/Pictured-sufferers-bizarre-condition-s-forcing-one-MILLION-Japanese-people-lock-inside-years-surfing-internet-reading-manga.html">Photo credit.</a></p>
+                <p>Figure 3:<br>Riki Cook, 30, had been a Hikikomori for three years. American-Japanese, he felt like he does not belong to any country. Photo by <a class="grey_link" target="_blank" href="https://witness.worldpressphoto.org/it-felt-safe-here-adcb41725fc2">Maika Elan</a> </p>
+            </div>
+        </div>
+
+        <div class="down_arrow">
+            <p class="arrow">▼</p>
+        </div>
+    </section>
+
+    <section id="s4">
+        <h2>Why Are People Hikikomoris</h2>
+        <p class="header_line"></p>
+        <p>Although not exclusive to Japan, Hikikomoris are relatively rampant there compared to other countries. Saito Tamaki views the problem as largely a family and social disease, caused by a mix of interdependence between Japanese parents and their children, and the pressure on these children to excel in academics and the corporate world.<sup>[6]</sup></p>
+        <p>Takahiro Kato, a professor of psychiatry who studies and treats Hikikomori, cites a famous Japanese saying: <b>“A protruding nail will be hammered down.”</b></p>
+        <p><a href="https://www.bbc.com/future/article/20190129-the-plight-of-japans-modern-hermits#:~:text=hikikomori%2C%20often%20used%20interchangeably%20for,Social%20Withdrawal%20%E2%80%93%20Adolescence%20Without%20End">He goes on to state</a> Japan’s rigid social norms, high expectations from parents and peers, as well as a culture of shame targeting those who deviate from this “norm” as reasons why Japan’s society is a fertile breeding ground for feelings of inadequacy that cause one to withdraw. </p>
+        <p>Many Hikikomoris describe miserable school years where they didn’t or couldn’t conform to the norm. Being bullied for being too fat, shy, or even better than others. One Hikikomori was a victim of bullying in fifth grade because he excelled in baseball without having played as long as his teammates.<sup>[6]</sup></p>
+        <div id="s4_quotes">
+            <p id="s4_quote_1">"I blamed myself," "I didn't want to see anyone, I didn't want to go outside." - <a class="grey_link" target="_blank" href="https://www.bbc.com/future/article/20190129-the-plight-of-japans-modern-hermits">Anonymous Hikikomori</a></p>
+            <p>"School is a monoculture, everyone has to have the same opinion. If someone says something they're out of the group" - <a class="grey_link" target="_blank" href="https://www.bbc.com/future/article/20190129-the-plight-of-japans-modern-hermits">Anonymous Hikikomori</a></p>
+            <p>"I don't have anything I want to do," "I missed the chance. I was in graduate school while most people were getting jobs. If I'd gone to work it would have been good" - <a class="grey_link" target="_blank" href="https://www.nytimes.com/2006/01/15/magazine/shutting-themselves-in.html">Hiroshi</a></p>
+        </div>
+        <p class="anim_anchor">Others might cite career failings as their reason for becoming Hikikomoris. <a href="https://www.bbc.com/future/article/20190129-the-plight-of-japans-modern-hermits#:~:text=hikikomori%2C%20often%20used%20interchangeably%20for,Social%20Withdrawal%20%E2%80%93%20Adolescence%20Without%20End">As one accounts that,</a> after losing his job in 2015, extreme pressure from his family as well as public criticism from the leader of his religious group (which he attended almost daily) eventually caused him to withdraw from society. </p>
+            <p><a target="_blank" href="https://www.nytimes.com/2006/01/15/magazine/shutting-themselves-in.html">Kenji Yamase,</a> who has been an on and off recluse for the past 30 years, sums up the sentiment well.</p>
+            <p class="emphasized_txt">“Most Hikikomori are people who can’t get back into society after straying off the path at some point… They have been forced into withdrawal. It isn’t that they’re shutting themselves away – it’s more like they’re being forced to shut themselves away.”</p>
+        <div class="down_arrow">
+            <p class="arrow">▼</p>
+        </div>
+    </section>
+
+    <section id="s5" class="sec">
+        <h2>Culture of Conformity</h2>
+        <p class="header_line"></p>
+        <p>Japan has, compared to other countries, an extremely conformative society; where uniformity is prized, where the collective and other is valued over the individual, where reputations and outward appearances are paramount. These values bleed into many aspects of their culture, especially their social norms, which are extremely strict, rigid, and detailed. </p>
+        <p>These are all combined with extreme pressure to excel academically. As well as a toxic work culture that normalises unpaid overtime, where declining invitations to work-related social gatherings are viewed as rude and insensitive, where taking leave and holidays are frowned upon, and much more.<sup>[1]</sup></p>
+        <p class="anim_anchor">These values and guidelines help maintain harmony and societal order, yet put extreme pressure on individuals to always upkeep these strict social norms and expectations. If you step out of line on any aspect, it has a strong impact on the way other people see you.</p>
+        <p class="emphasized_txt">“If a kid doesn’t follow a set path to an elite university and a top corporation, many parents – and by extension their children – <b>view it as a failure</b>"</p>
+        <p>- <a target="_blank" href="https://www.nytimes.com/2006/01/15/magazine/shutting-themselves-in.html">Mariko Fujiwara,</a> director of research and the Hakuhodo Institute of Life and Living in Tokyo.</p>
+        <div class="down_arrow">
+            <p class="arrow">▼</p>
+        </div>
+    </section>
+
+    <section id="s6">
+        <h2>Rehabilitation</h2>
+        <p class="header_line"></p>
+        <p>Although Hikikomori is seen as a social phenomenon instead of an actual mental condition, there exists many support lines for them in Japan, with almost all involving normalising social interactions, and creating spaces for such. </p>
+        <p>Such tactics can  involve family training to fix dysfunctional home environments, support groups and organisations that aim to cultivate “safe havens” for them to practise and re-learn social skills. These can also be combined with therapy and medication for underlying psychiatric disorders.<sup>[6]</sup></p>
+        <p>A common first point of contact for Hikikomoris are “rental sisters,” people that families can hire to befriend hikikomoris and break their isolation.</p>
+        <p>Yoshi Kawakami, a rental sister, <a target="_blank" href="https://www.nytimes.com/2006/01/15/magazine/shutting-themselves-in.html"></a>recounts waiting outside a doorstep near Kyoto,</a> though the winter snow and summer heat, for two hours or more, fueled by the hope that someone will answer.</p>
+        <div id="s6_images" class="anim_anchor">
+            <figure>
+                <img src="Images/Ayako_Oguri_1.png" class="s6_flex" alt="Ayako knocking on Koyama's door">
+            </figure>
+            <figure>
+                <img src="Images/Ayako_Oguri_2.png" class="s6_flex" alt="Ayako sliding her letter under Koyama's door">
+            </figure>
+        </div>
+        <p id="s6_pseudo_caption">Figures 4 & 5: Rental sister Ayako Oguri writes to Masahiro Koyama, who has been a Hikikomori for 10 years. Since he refuses to talk, she writes letters and leaves them in front of his room. Photos by <a class="grey_link" target="_blank" href="https://witness.worldpressphoto.org/it-felt-safe-here-adcb41725fc2">Maika Elan.</a></p>
+        <p>Most first meetings start with one-sided conversations through the door. They'll talk about her interests and hobbies, often with no answer. Months can go by before a hikikomori opens the door and even more months, or a year, before they go out.</p>
+        <p>But it does happen. It may take time and patience, but <b>there are many avenues of support for Hikikomoris.</b></p>
+        <div class="down_arrow">
+            <p class="arrow">▼</p>
+        </div>
+    </section>
+
+    <section id="s7">
+        <h2>References</h2>
+        <p class="header_line"></p>
+        <ol>
+            <li>Bracke D. (2022, February 15). Japan's Extreme Work Culture. Retrieved from: <a target="_blank" href="https://www.byarcadia.org/post/japan-s-extreme-work-culture-might-be-coming-to-an-end">https://www.byarcadia.org/post/japan-s-extreme-work-culture-might-be-coming-to-an-end</a></li>
+            <li>Section 5 background image:<br>Dey S. (2023, April 05). What is Hikikomori, the phenomenon that has 1.5 million Japanese living in isolation. Retrieved from: <a target="_blank" href="https://www.moneycontrol.com/news/trends/what-is-hikikomori-the-phenomenon-that-has-1-5-million-japanese-living-in-isolation-10368181.html">https://www.moneycontrol.com/news/trends/what-is-hikikomori-the-phenomenon-that-has-1-5-million-japanese-living-in-isolation-10368181.html</a></li>
+            <li>Figure 1, 3, 4 & 5:<br>Elan M. (2017, December 21). It felt safe here. Retrieved from: <a target="_blank" href="https://witness.worldpressphoto.org/it-felt-safe-here-adcb41725fc2">https://witness.worldpressphoto.org/it-felt-safe-here-adcb41725fc2</a></li>
+            <li>ET Online. (2023, April 6). What's Hikikomori? Why 15 lakh Japanese are living in isolation. Retrieved from: <a target="_blank" href="https://economictimes.indiatimes.com/news/how-to/whats-hikikomori-why-15-lakh-japanese-are-living-in-isolation/articleshow/99275748.cms">https://economictimes.indiatimes.com/news/how-to/whats-hikikomori-why-15-lakh-japanese-are-living-in-isolation/articleshow/99275748.cms</a></li>
+            <li>Gent E. (2019, January 30). The plight of Japan's modern hermits. Retrieved from: <a target="_blank" href="https://www.bbc.com/future/article/20190129-the-plight-of-japans-modern-hermits">https://www.bbc.com/future/article/20190129-the-plight-of-japans-modern-hermits</a></li>
+            <li>Jones M. (2006, January 15). Shutting Themselves In. Retrieved from: <a target="_blank" href="https://www.nytimes.com/2006/01/15/magazine/shutting-themselves-in.html">https://www.nytimes.com/2006/01/15/magazine/shutting-themselves-in.html</a></li>
+            <li>Mckirdy A. (2019, June 1). The Prison inside: Japan's hikikomori lack relationships, not physical spaces. Retrieved from: <a target="_blank" href="https://www.japantimes.co.jp/life/2019/06/01/lifestyle/prison-inside-japans-hikikomori-lack-relationships-not-physical-spaces/">https://www.japantimes.co.jp/life/2019/06/01/lifestyle/prison-inside-japans-hikikomori-lack-relationships-not-physical-spaces/</a></li>
+            <li>Figure 2:<br>Michael S. (2015, July 9). Pictured: Sufferers of the bizzare condition causing almost a million Japanese men to lock themselves inside for YEARS, surfing the internet and reading manga.
+            Retrieved from: <a target="_blank" href="https://www.dailymail.co.uk/news/article-3154180/Pictured-sufferers-bizarre-condition-s-forcing-one-MILLION-Japanese-people-lock-inside-years-surfing-internet-reading-manga.html">https://www.dailymail.co.uk/news/article-3154180/Pictured-sufferers-bizarre-condition-s-forcing-one-MILLION-Japanese-people-lock-inside-years-surfing-internet-reading-manga.html</a></li>
+            <li>Rooksby, M., et al. (2020, October 30). Hikikomori: understanding the people who choose to live in extreme isolation. Retrieved from <a href="https://theconversation.com/hikikomori-understanding-the-people-who-choose-to-live-in-extreme-isolation-148482">https://theconversation.com/hikikomori-understanding-the-people-who-choose-to-live-in-extreme-isolation-148482</a></li>
+            <li>Section 1 background video taken from:<br>PexBell. (2021). Gaming Free Stock Footage - Gaming Free Stock Videos - Gaming No Copyright Videos. Retrieved from: <a target="_blank" href="https://www.youtube.com/watch?v=kLL2mMvB16w&ab_channel=PexBell">https://www.youtube.com/watch?v=kLL2mMvB16w&ab_channel=PexBell</a></li>
+        </ol>
+        </section>
+</body>
+</html>

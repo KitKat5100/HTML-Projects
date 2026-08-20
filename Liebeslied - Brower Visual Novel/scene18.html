@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html> 
+
+<head>
+	<meta charset="UTF-8">
+	<title>AnetteDate</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+            //Setup
+            let progress = 0;
+            let choice1 = false; 
+            let choice2 = false; 
+
+            //Shortcuts to make typing easier
+            let playerText = $('#playerText');
+            let playerTextbox = $('#playerTextbox');
+            let stage = $('#stage');
+            
+            //Preparing scene
+            stage.css("background-image", "url('Images/Room/Day.jpg')");
+            changeTextbox(playerTextbox, 2, 2); 
+
+            //Setting textbox color for the scene
+
+            stage.click(updateText);
+            function updateText(){
+                progress++; 
+                if(progress == 1){
+                    changeText(playerText, "It's been awhile since I went out like this, to say that I’m excited is an understatement.");
+                } else if (progress == 2){
+                    changeText(playerText, "Anette recommended that we try a new cafe today.");
+                } else if (progress == 3){
+                    $('#playerTextbox').fadeOut(160, function() {
+                        changeTextbox(playerTextbox, 2, 1); 
+                        setName("Alfira");
+                        playerText.text("Hopefully the prices aren’t too expensive…");
+                    });   
+                    $('#playerTextbox').fadeIn(160);
+                } else if (progress == 4){
+                    changeBackground("url('Images/Black.png')");
+                    $('#playerTextbox').fadeOut(160, function() {
+                        changeTextbox(playerTextbox, 1, 2); 
+                        setName("");
+                        playerText.text("Me and Anette have a nice afternoon eating fluffy pancakes.");
+                    });   
+                    $('#playerTextbox').fadeIn(160);
+                } else if (progress == 5){
+                    changeText(playerText, "She chats to me about her week, talking about how she’s with her new team at work.");
+                } else if (progress == 6){
+                    changeText(playerText, "There’s a hint of disappointment on her face as we part ways.");
+                } else if (progress == 7){
+                    changeText(playerText, "The next few days go by as usual…");
+                } else if (progress == 8){
+                    window.location = "scene19.html";
+                } else { 
+                    progress--; 
+                }
+            }
+
+            //Choice functions
+            $('#choice1').click(function(){
+                choice1 = true; 
+            })
+            $('#choice2').click(function(){
+                choice2 = true; 
+            })
+
+            //Changes textbox name + applies fade in/out
+            function setName(name){
+                $('#playerName').text(name); 
+            }
+
+            //Smooth background transition by preemptively loading it on a separate scene to remove black flash
+            function changeBackground(url){
+                $('#stage2').css("background-image", url).delay(100).show(function(){
+                    stage.css("background-image", "none");
+                    stage.css("background-image", url);
+                    
+                });
+                //stage.css("background-image", "none");
+            }
+
+            //Changes text + applies fade in/out
+            function changeText(person, text){
+                person.fadeOut(160, function(){
+                    person.text(text);
+                });
+                person.fadeIn(160);
+            }
+
+            //Changes textbox color and type
+            function changeTextbox(textbox, color, boxType){ 
+                if(color == 1){ //White
+                    textbox.css("background-color", "rgba(222,218,220,0.9)");
+                    textbox.css("color", "rgba(127,103,103, 1)");
+                    textbox.css("border", "5px solid rgba(127,103,103, 1)");
+                } else if(color == 2){ //Dark Brown
+                    textbox.css("background-color", "rgba(56, 35, 33, 0.97)");
+                    textbox.css("color", "rgba(245, 235, 223, 1)");
+                    textbox.css("border", "5px solid rgba(70, 51, 49, 0.97)");
+                } else if(color == 3){ //Anette Burgundy
+                    textbox.css("background-color", "rgba(114,42,44, 0.97)");
+                    textbox.css("color", "rgba(248,233,233, 1)");
+                    textbox.css("border", "5px solid rgba(110,57,59, 1)");
+                }
+
+                if(boxType == 1){ //Dialogue Box
+                    textbox.css("border-radius", "30px");
+                } else if (boxType == 2){ //Thought Box
+                    textbox.css("border-radius", "100px");
+                }
+            }
+
+            function fadeInSound(audio, miliseconds){
+                audio[0].volume = 0; 
+                audio.animate({volume: 0.2}, miliseconds); 
+            }
+            
+            function fadeOutSound(audio, miliseconds){
+                audio.animate({volume: 0}, miliseconds); 
+            }
+
+      });
+
+	</script>
+</head>
+
+<body>
+    <audio src="Audio/Liebeslied.mp3" id="BGM" loop></audio>
+
+	<div id="stage">
+
+		<div id = playerTextbox class="textbox">
+			<p id ="playerText" class="text">Today's the date with Anette.</p>
+            <p id ="playerName" class="name"></p>
+		</div>
+
+        <div id="stage2">
+        </div>
+
+	</div>
+
+</body>
+</html>

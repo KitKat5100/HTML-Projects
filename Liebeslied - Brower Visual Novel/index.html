@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html> 
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title Screen</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+            //BGM music for title screen
+            $('#BGM')[0].play();
+            fadeInSound($('#BGM'), 8000);
+
+            let stage = $('#stage');
+            stage.css("background-image", "url('Images/Room/Night.jpg')");
+
+            //Start game
+            $('#choice2').click(function(){
+                window.location = "scene1.html"; 
+            })
+
+            function fadeInSound(audio, miliseconds){
+                audio[0].volume = 0; 
+                audio.animate({volume: 0.4}, miliseconds); 
+            }
+            
+            function fadeOutSound(audio, miliseconds){
+                audio.animate({volume: 0}, miliseconds); 
+            }
+
+      });
+
+	</script>
+</head>
+
+<body>
+    <audio src="Audio/Liebeslied.mp3" id="BGM" loop></audio>
+
+	<div id="stage">
+
+        <div class="textbox" id="choice2">
+            <p class = "text">Start</p>
+        </div>
+
+        <div class="textbox" id="title">
+            <p class = "text">Liebesleid</p>
+        </div>
+
+        <div id="stage2">
+        </div>
+
+	</div>
+
+</body>
+</html>
