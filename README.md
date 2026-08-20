@@ -1,6 +1,7 @@
 # HTML-Projects
-A repository to hold some of the html-based projects that I have made over the course of my university degree
+A repository to hold some of the html-based projects that I have made over the course of my university degree. 
 
+To view the websites, download the files and open "index.html"
 
 # Hikikomori: Informational Website
 HTML | CSS| JQuery
